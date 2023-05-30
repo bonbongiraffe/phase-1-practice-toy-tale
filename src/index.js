@@ -5,15 +5,35 @@ document.addEventListener("DOMContentLoaded", () => {
   fetch("http://localhost:3000/toys")
     .then((r) => r.json())
     .then((toysObj) => {
-    //  console.log(toysObj)
+      //console.log(toysObj)
       for(let i = 0; i < toysObj.length; i++) {
-        let {image, likes, name} = toysObj[i]
-       // console.log(image, likes, name)
+        //extract toy data from api
+        let {id, image, likes, name} = toysObj[i]
+
+        //create toy card
         let toy = document.createElement('div')
+        toy.textContent = name
         toy.className = 'card'
+
+        //add toy image
         let toyImage = document.createElement('img')
-        toyImage.src = 'http://www.pngmart.com/files/3/Toy-Story-Woody-PNG-Photos.png'
+        toyImage.className = 'toy-avatar'
+        toyImage.src = image
+
+        //create like button
+        let likeBtn = document.createElement('input')
+        likeBtn.value = likes
+        likeBtn.id = id
+        likeBtn.type = 'button'
+        likeBtn.addEventListener('click', (e) => {
+          //console.log('button was clicked')
+          likeBtn.value++;
+        })
         
+        //append elements
+        toy.appendChild(toyImage)
+        toy.appendChild(likeBtn)
+        toyCollection.appendChild(toy)
       }
     })
     
