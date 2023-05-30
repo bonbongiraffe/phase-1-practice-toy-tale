@@ -1,5 +1,5 @@
 let addToy = false;
-
+let toyLikes = []
 document.addEventListener("DOMContentLoaded", () => {
   const toyCollection = document.getElementById('toy-collection')
   fetch("http://localhost:3000/toys")
@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
       for(let i = 0; i < toysObj.length; i++) {
         //extract toy data from api
         let {id, image, likes, name} = toysObj[i]
+        toyLikes[id] = likes
 
         //create toy card
         let toy = document.createElement('div')
@@ -21,17 +22,23 @@ document.addEventListener("DOMContentLoaded", () => {
         toyImage.src = image
 
         //create like button
-        let likeBtn = document.createElement('input')
-        likeBtn.value = likes
+        let likeBtn = document.createElement('button')
+        let likeCounter = document.createElement('div')
+        
+
+        likeCounter.textContent = `${toyLikes[id]} likes`
+        likeBtn.textContent = 'like'
         likeBtn.id = id
-        likeBtn.type = 'button'
+        //likeBtn.type = 'button'
         likeBtn.addEventListener('click', (e) => {
-          //console.log('button was clicked')
-          likeBtn.value++;
+          toyLikes[id]++
+          likeCounter.textContent = `${toyLikes[id]} likes`
+        
         })
         
         //append elements
         toy.appendChild(toyImage)
+        toy.appendChild(likeCounter)
         toy.appendChild(likeBtn)
         toyCollection.appendChild(toy)
       }
