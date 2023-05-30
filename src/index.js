@@ -1,5 +1,5 @@
 let addToy = false;
-let toyLikes = []
+
 document.addEventListener("DOMContentLoaded", () => {
   const toyCollection = document.getElementById('toy-collection')
   fetch("http://localhost:3000/toys")
